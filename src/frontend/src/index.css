@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'fontOne';
+    src: url(./assets/Fonts/fontOne.otf);
+}
+
+:root {
+    --bg-primary: #F8FAFC; /* Slate 50 - Light Mode Default */
+    --text-primary: #0F172A; /* Slate 900 */
+    --accent-cyan: #06b6d4;
+    --accent-blue: #3b82f6;
+}
+
+.dark {
+    --bg-primary: #020617; /* Slate 950 - Dark Mode */
+    --text-primary: #F8FAFC; /* Slate 50 */
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* Autofill styling fix */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #0f172a inset !important;
+    -webkit-text-fill-color: white !important;
+    caret-color: white !important;
+    border-color: #334155 !important;
+    border-radius: 0.75rem !important;
+    /* MATCHING rounded-xl */
+}
