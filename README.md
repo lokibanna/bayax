@@ -144,5 +144,5 @@ We welcome contributions!
 ---
 
 <div align="center">
-  <p>Made with ❤️ for Educators.</p>
+  <p>Made with ❤️ for Educators hhh.</p>
 </div>
