@@ -155,6 +155,6 @@ npm run dev
 <div align="center">
   <img src="https://capsule-render.vercel.app/api?type=waving&color=0:00C9FF,100:92FE9D&height=120&section=footer" width="100%" />
   
-  <b>Designed for Visionaries. Built by Samay Samrat.</b><br/>
+  <b>Designed for Visionaries. Built by the BayaX Team.</b><br/>
   <i>Leave a ⭐ if BayaX blew your mind!</i>
 </div>
