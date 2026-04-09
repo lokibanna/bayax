@@ -35,9 +35,7 @@
 
 Most startups fail because of a lack of *clarity* and *structure*. **BayaX** bridges the gap between an abstract thought and a billion-dollar execution plan. Just feed it a niche or a raw idea, and watch the AI construct your entire path.
 
-<div align="center">
-  <img src="./src/frontend/public/hero.png" alt="BayaX Hero Interface" width="90%" style="border-radius: 12px; box-shadow: 0 0 30px rgba(0, 201, 255, 0.3);" />
-</div>
+
 
 ---
 
