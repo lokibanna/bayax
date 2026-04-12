@@ -64,7 +64,7 @@ export const createPlan = async (req: Request, res: Response): Promise<void> => 
 
     try {
       // Primary attempt: Gemini 1.5 Flash
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
       const result = await model.generateContent(prompt + " Output ONLY valid JSON. Do not use Markdown code blocks.");
       const response = await result.response;
       const rawContent = response.text();

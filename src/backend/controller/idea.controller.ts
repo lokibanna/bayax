@@ -98,7 +98,7 @@ export const analyzeIdea = async (req: Request, res: Response): Promise<void> =>
 
     try {
       // Primary attempt: Gemini 1.5 Flash
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
       const result = await model.generateContent(systemPrompt + "\nOutput strictly valid JSON.");
       const geminiResponse = await result.response;
       const responseText = geminiResponse.text();
