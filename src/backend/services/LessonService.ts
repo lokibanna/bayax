@@ -32,8 +32,4 @@ export class LessonService {
   async getPlans(creatorId: string) {
     return LessonPlanModel.find({ creatorId }).sort({ createdAt: -1 });
   }
-
-  async deletePlan(planId: string, creatorId: string): Promise<void> {
-    await LessonPlanModel.findOneAndDelete({ _id: planId, creatorId });
-  }
 }

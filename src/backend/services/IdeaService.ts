@@ -36,7 +36,7 @@ export class IdeaService {
       `;
     }
 
-    const systemPrompt = this.aiEngine.buildPrompt(promptContext, "idea");
+    const systemPrompt = this.aiEngine.buildPrompt(promptContext);
     const analysisData = await this.aiEngine.execute(systemPrompt);
     return analysisData;
   }
@@ -51,13 +51,5 @@ export class IdeaService {
       analysisData,
       creatorId: data.creatorId,
     });
-  }
-
-  async getProjects(creatorId: string) {
-    return IdeaProjectModel.find({ creatorId }).sort({ createdAt: -1 });
-  }
-
-  async deleteProject(projectId: string, creatorId: string): Promise<void> {
-    await IdeaProjectModel.findOneAndDelete({ _id: projectId, creatorId });
   }
 }

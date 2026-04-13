@@ -1,7 +1,5 @@
 import Groq from "groq-sdk";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import dotenv from "dotenv";
-dotenv.config();
 
 export class AIEngine {
   private static instance: AIEngine;
@@ -22,26 +20,23 @@ export class AIEngine {
     return AIEngine.instance;
   }
 
-  public buildPrompt(context: string, type: "idea" | "lesson"): string {
-    if (type === "idea") {
-      return `
-        You are BayaX, the world's most advanced Product Architect AI.
-        Your goal is to transform the input into a complete EXECUTION BLUEPRINT.
-        Return ONLY a valid JSON object. No markdown. No extra text.
-        JSON STRUCTURE:
-        {
-          "clarityCheck": { "originalInput": "String", "refinedConcept": "String", "category": "String" },
-          "marketAnalysis": { "score": 0, "verdict": "String", "competitors": ["String"], "targetAudience": ["String"], "monetization": ["String"] },
-          "techStack": { "frontend": "String", "backend": "String", "database": "String", "deployment": "String", "rationale": "String" },
-          "mindMap": { "root": "String", "branches": [{ "label": "String", "children": ["String"] }] },
-          "executionStructure": { "phases": [{ "name": "Phase 1: MVP", "steps": ["Step 1", "Step 2"] }] },
-          "logicFlow": { "topic": "String", "problem": "String", "solution": "String", "marketEffects": { "positive": "String", "negative": "String" } },
-          "criticalQuestions": ["String"]
-        }
-        CONTEXT: ${context}
-      `;
-    }
-    return context;
+  public buildPrompt(context: string): string {
+    return `
+      You are BayaX, the world's most advanced Product Architect AI.
+      Your goal is to transform the input into a complete EXECUTION BLUEPRINT.
+      Return ONLY a valid JSON object. No markdown. No extra text.
+      JSON STRUCTURE:
+      {
+        "clarityCheck": { "originalInput": "String", "refinedConcept": "String", "category": "String" },
+        "marketAnalysis": { "score": 0, "verdict": "String", "competitors": ["String"], "targetAudience": ["String"], "monetization": ["String"] },
+        "techStack": { "frontend": "String", "backend": "String", "database": "String", "deployment": "String", "rationale": "String" },
+        "mindMap": { "root": "String", "branches": [{ "label": "String", "children": ["String"] }] },
+        "executionStructure": { "phases": [{ "name": "Phase 1: MVP", "steps": ["Step 1", "Step 2"] }] },
+        "logicFlow": { "topic": "String", "problem": "String", "solution": "String", "marketEffects": { "positive": "String", "negative": "String" } },
+        "criticalQuestions": ["String"]
+      }
+      CONTEXT: ${context}
+    `;
   }
 
   public async execute(prompt: string): Promise<object> {

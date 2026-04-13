@@ -1,16 +1,12 @@
 import { Request, Response } from "express";
 import { signUpObject, signInObject } from "../utils/zod";
 import { UserService } from "../services/UserService";
-import { LessonPlanModel } from "../model/lesson.model";
-import { JWTService } from "../services/JWTService";
 
 export class UserController {
   private readonly userService: UserService;
-  private readonly jwtService: JWTService;
 
   constructor() {
     this.userService = new UserService();
-    this.jwtService = new JWTService();
   }
 
   private getCookieOptions() {
@@ -86,16 +82,6 @@ export class UserController {
       res.status(200).json({ msg: "Token refreshed" });
     } catch {
       res.status(403).json({ msg: "Invalid refresh token" });
-    }
-  };
-
-  public viewPlans = async (req: Request, res: Response): Promise<void> => {
-    const userId = (req as any).userId;
-    try {
-      const lessonPlans = await LessonPlanModel.find({ creatorId: userId });
-      res.status(200).json({ msg: "lesson plan fetched successfully", lessonPlans });
-    } catch (error: any) {
-      res.status(500).json({ msg: `error while fetching the data: ${error.message}` });
     }
   };
 

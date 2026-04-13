@@ -51,10 +51,6 @@ export class UserService {
     return this.jwtService.generateAccessToken(decoded.userId);
   }
 
-  async getProfile(userId: string) {
-    return UserModel.findById(userId).select("-password");
-  }
-
   private generateTokens(userId: string): AuthTokens {
     return {
       accessToken: this.jwtService.generateAccessToken(userId),

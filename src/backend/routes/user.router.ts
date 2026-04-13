@@ -8,7 +8,6 @@ const userController = new UserController();
 userRouter.post("/signup", userController.signUp);
 userRouter.post("/signin", userController.signIn);
 userRouter.post("/refreshToken", userController.refreshToken);
-userRouter.get("/viewPlan", auth, userController.viewPlans);
 userRouter.get("/api/logOut", auth, userController.clearCookie);
 
 export { userRouter };

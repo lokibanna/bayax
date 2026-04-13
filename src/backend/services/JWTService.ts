@@ -1,6 +1,4 @@
 import jwt, { SignOptions } from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
 
 export class JWTService {
   private readonly accessSecret: string;
