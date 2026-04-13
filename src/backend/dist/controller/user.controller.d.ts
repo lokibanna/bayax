@@ -1,6 +1,12 @@
 import { Request, Response } from "express";
-export declare const signUp: (req: Request, res: Response) => Promise<void>;
-export declare const signIn: (req: Request, res: Response) => Promise<void>;
-export declare const viewPlans: (req: Request, res: Response) => Promise<void>;
-export declare const refreshToken: (req: Request, res: Response) => Promise<void>;
-export declare const clearCookie: (req: Request, res: Response) => void;
+export declare class UserController {
+    private readonly userService;
+    private readonly jwtService;
+    constructor();
+    private getCookieOptions;
+    signUp: (req: Request, res: Response) => Promise<void>;
+    signIn: (req: Request, res: Response) => Promise<void>;
+    refreshToken: (req: Request, res: Response) => Promise<void>;
+    viewPlans: (req: Request, res: Response) => Promise<void>;
+    clearCookie: (req: Request, res: Response) => void;
+}

@@ -6,5 +6,6 @@ const lesson_controller_1 = require("../controller/lesson.controller");
 const auth_1 = require("../middlewares/auth");
 const lessonRouter = (0, express_1.Router)();
 exports.lessonRouter = lessonRouter;
-lessonRouter.post("/createPlan", auth_1.auth, lesson_controller_1.createPlan);
-lessonRouter.get("/viewAllLessonPlans", auth_1.auth, lesson_controller_1.viewAllPlans);
+const lessonController = new lesson_controller_1.LessonController();
+lessonRouter.post("/createPlan", auth_1.auth, lessonController.createPlan);
+lessonRouter.get("/viewAllLessonPlans", auth_1.auth, lessonController.viewAllPlans);

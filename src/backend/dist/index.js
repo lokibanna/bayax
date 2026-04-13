@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const mongoose_1 = __importDefault(require("mongoose"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const DatabaseConnection_1 = require("./services/DatabaseConnection");
 const user_router_1 = require("./routes/user.router");
 const lesson_router_1 = require("./routes/lesson.router");
 const idea_router_1 = require("./routes/idea.router");
@@ -28,12 +28,8 @@ const startServer = async () => {
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
     });
-    try {
-        await mongoose_1.default.connect(process.env.MONGO_URI);
-        console.log("Connected to MongoDB successfully!");
-    }
-    catch (error) {
-        console.error("Database connection failed:", error);
-    }
+    // Use DatabaseConnection Singleton — ensures only ONE connection
+    const db = DatabaseConnection_1.DatabaseConnection.getInstance();
+    await db.connect(process.env.MONGO_URI);
 };
 startServer();

@@ -34,8 +34,8 @@ export class IdeaController {
 
   public deleteProject = async (req: Request, res: Response): Promise<void> => {
     try {
-      const creatorId = (req as any).userId;
-      const { id } = req.params;
+      const creatorId = (req as any).userId as string;
+      const id = req.params.id as string;
       await this.ideaService.deleteProject(id, creatorId);
       res.status(200).json({ success: true, message: "Project deleted" });
     } catch (error: any) {
