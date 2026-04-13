@@ -1,8 +1,8 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import { DatabaseConnection } from "./services/DatabaseConnection";
 import { userRouter } from "./routes/user.router";
 import { lessonRouter } from "./routes/lesson.router";
 import { ideaRouter } from "./routes/idea.router";
@@ -30,13 +30,9 @@ const startServer = async (): Promise<void> => {
     console.log(`Server running on port ${PORT}`);
   });
 
-  try {
-    await mongoose.connect(process.env.MONGO_URI as string);
-    console.log("Connected to MongoDB successfully!");
-  } catch (error) {
-    console.error("Database connection failed:", error);
-  }
+  // Use DatabaseConnection Singleton — ensures only ONE connection
+  const db = DatabaseConnection.getInstance();
+  await db.connect(process.env.MONGO_URI as string);
 };
 
 startServer();
-//trial

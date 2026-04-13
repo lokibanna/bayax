@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { analyzeIdea } from "../controller/idea.controller";
+import { IdeaController } from "../controller/idea.controller";
+import { auth } from "../middlewares/auth";
 
 const ideaRouter = Router();
+const ideaController = new IdeaController();
 
-ideaRouter.post("/analyze", analyzeIdea);
+ideaRouter.post("/analyze", auth, ideaController.analyzeIdea);
 
 export { ideaRouter };

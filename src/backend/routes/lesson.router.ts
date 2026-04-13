@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { createPlan, viewAllPlans } from "../controller/lesson.controller";
+import { LessonController } from "../controller/lesson.controller";
 import { auth } from "../middlewares/auth";
 
 const lessonRouter = Router();
+const lessonController = new LessonController();
 
-lessonRouter.post("/createPlan", auth, createPlan);
-lessonRouter.get("/viewAllLessonPlans", auth, viewAllPlans);
+lessonRouter.post("/createPlan", auth, lessonController.createPlan);
+lessonRouter.get("/viewAllLessonPlans", auth, lessonController.viewAllPlans);
 
 export { lessonRouter };
