@@ -1,16 +1,11 @@
 import axios from "axios";
 
-// const axiosInstance = axios.create({
-//     baseURL:'http://localhost:3002/api/v1', // base url for each backend req
-//     withCredentials : true // with this make sure that access and refresh token sent with each req
-// })
-
 const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:3004/api/v1",
   withCredentials: true,
 });
 
-axiosInstance.interceptors.request.use(
+axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -23,8 +18,7 @@ axiosInstance.interceptors.request.use(
       originalRequest._retry = true;
 
       try {
-        await axiosInstance.post("user/refreshToken");
-
+        await axiosInstance.post("/user/refreshToken");
         return axiosInstance(originalRequest);
       } catch (refreshError) {
         return Promise.reject(refreshError);
@@ -36,3 +30,4 @@ axiosInstance.interceptors.request.use(
 );
 
 export default axiosInstance;
+

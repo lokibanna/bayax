@@ -1,51 +1,45 @@
 import { Request, Response } from "express";
-import { AIEngine } from "../services/AIEngine";
-
-interface IdeaRequestBody {
-  field: string;
-  intent: string;
-  content?: string;
-  techStack?: string;
-}
+import { IdeaService } from "../services/IdeaService";
 
 export class IdeaController {
-  private readonly aiEngine: AIEngine;
+  private readonly ideaService: IdeaService;
 
   constructor() {
-    this.aiEngine = AIEngine.getInstance();
+    this.ideaService = new IdeaService();
   }
 
   public analyzeIdea = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { field, intent, content, techStack }: IdeaRequestBody = req.body;
+      const { field, intent, content, techStack } = req.body;
+      const creatorId = (req as any).userId;
 
-      let promptContext = "";
-      if (intent === "need_idea") {
-        promptContext = `
-          USER SCENARIO: The user wants to build something in the "${field}" field but DOES NOT have a specific idea.
-          USER CONSTRAINTS: "${content || "None provided"}"
-          PREFERRED TECH: "${techStack || "Any"}"
-          TASK: Generate a highly viable, modern startup idea in the ${field} space, then analyze it.
-        `;
-      } else {
-        promptContext = `
-          USER SCENARIO: The user has a specific idea in the "${field}" field.
-          IDEA DESCRIPTION: "${content}"
-          PREFERRED TECH: "${techStack || "Best suited for the project"}"
-          TASK: Analyze this idea. Enhance it, structure it, and validate it.
-        `;
-      }
+      const analysisData = await this.ideaService.performAnalysis({ field, intent, content, techStack, creatorId });
+      await this.ideaService.storeProject({ field, intent, content, techStack, creatorId }, analysisData);
 
-      const systemPrompt = this.aiEngine.buildPrompt(promptContext, "idea");
-      const jsonResponse = await this.aiEngine.execute(systemPrompt);
-
-      res.status(200).json({ success: true, data: jsonResponse });
+      res.status(200).json({ success: true, data: analysisData });
     } catch (error: any) {
-      res.status(500).json({
-        success: false,
-        message: error.message || "AI Analysis Failed",
-        error: error.message,
-      });
+      res.status(500).json({ success: false, message: error.message || "AI Analysis Failed" });
+    }
+  };
+
+  public getProjects = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const creatorId = (req as any).userId;
+      const projects = await this.ideaService.getProjects(creatorId);
+      res.status(200).json({ success: true, projects });
+    } catch (error: any) {
+      res.status(500).json({ success: false, message: error.message });
+    }
+  };
+
+  public deleteProject = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const creatorId = (req as any).userId;
+      const { id } = req.params;
+      await this.ideaService.deleteProject(id, creatorId);
+      res.status(200).json({ success: true, message: "Project deleted" });
+    } catch (error: any) {
+      res.status(500).json({ success: false, message: error.message });
     }
   };
 }

@@ -5,12 +5,13 @@ const axiosIdea = axios.create({
     withCredentials: true,
 });
 
-const analyzeIdea = async ({ inputType, content, field, username }) => {
+const analyzeIdea = async ({ field, intent, content, techStack, username }) => {
     try {
         const response = await axiosIdea.post("/analyze", {
-            inputType,
-            content,
             field,
+            intent,
+            content,
+            techStack,
             username
         });
         return response;
@@ -21,3 +22,4 @@ const analyzeIdea = async ({ inputType, content, field, username }) => {
 };
 
 export { analyzeIdea };
+
