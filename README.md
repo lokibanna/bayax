@@ -104,19 +104,19 @@ BayaX is built on a highly robust, enterprise-grade architecture. To ensure scal
 
 ### 🧩 Core Design Patterns
 
-1. **Singleton Pattern** (`AIEngine.ts`, `DatabaseConnection.ts`)  
-   **How & Why:** Guarantees that only one instance of the AI SDK or MongoDB connection exists in memory. This prevents the server from crashing or getting rate-limited if 100 users attempt to generate ideas simultaneously by forcing them to queue through a highly optimized global engine.
-
-2. **MVC-S Pattern (Model-View-Controller-Service)**  
+1. **MVC-S (Model-View-Controller-Service)** *(Architectural Pattern)*  
    **How & Why:** The backbone of BayaX's separation of concerns. Controllers exclusively handle HTTP requests, Services manage all heavy business logic and API orchestration, and Models bind strictly to the database. This prevents spaghetti code and makes components fiercely scalable.
 
-3. **Fallback Strategy Pattern** (`AIEngine.ts`)  
+2. **Singleton Pattern** (`AIEngine.ts`, `DatabaseConnection.ts`) *(Creational Design Pattern)*  
+   **How & Why:** Guarantees that only one instance of the AI SDK or MongoDB connection exists in memory. This prevents the server from crashing or getting rate-limited if 100 users attempt to generate ideas simultaneously by forcing them to queue through a highly optimized global engine.
+
+3. **Fallback Strategy Pattern** (`AIEngine.ts`) *(Behavioral Design Pattern)*  
    **How & Why:** AI networks can have downtime. BayaX implements a dynamic fallback strategy. The primary strategy attempts `callGemini()`. If it hits a rate limit or failure, the system automatically catches the exception and pivots to a backup strategy: `callGroq()`. The user experiences zero downtime.
 
-4. **Chain of Responsibility (Middleware Pattern)** (`auth.ts`)  
+4. **Chain of Responsibility** (`auth.ts`) *(Behavioral Design Pattern / Middleware)*  
    **How & Why:** Instead of repeating token validation logic across 50 controllers, the `AuthMiddleware` intercepts incoming requests, decodes the JWT, and verifies the user. If valid, it passes control forward via `next()`; if compromised, it terminates the chain with a `403 Forbidden`.
 
-5. **Facade Pattern** (`JWTService.ts`, `ConvertUtils.ts`)  
+5. **Facade Pattern** (`JWTService.ts`, `ConvertUtils.ts`) *(Structural Design Pattern)*  
    **How & Why:** Masks complex third-party library internals. Generating mathematical `.docx` table structures is complex, but the controllers never see it—they just call `createDocument()`. Swapping dependencies in the future requires zero changes to the core application.
 
 ### 🏛️ SOLID Principles Implemented
